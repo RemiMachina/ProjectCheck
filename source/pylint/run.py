@@ -115,9 +115,8 @@ for file, data in processed.items():
                 print(line.format(line_indent, column_indent, id_indent))
             else:
                 print(line.format(newline_indent))
-
-output = {"errors": total_errors, "warnings": total_warnings, "suggestions": total_suggestions}
+                
 
 # Output to Github  
-subprocess.run(f"echo \"::set-output name=pylint::{str(output)}\"", shell = True)      
+subprocess.run(f"echo \"::set-output name=pylint::{{'errors': {total_errors}, 'warnings': {total_warnings}, 'suggestions': {total_suggestions}}}\"", shell = True)      
 
