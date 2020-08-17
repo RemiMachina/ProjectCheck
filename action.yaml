@@ -2,15 +2,15 @@ name: "Project Check"
 description: ""
 
 inputs:
-    path:
-        description: "The path to the directory to run over"    
+    run:
+        description: "The name of the action to execute"    
         required: true
 
 runs:
       using: "docker"
       image: "Dockerfile"
       env:
-          CHECKOUT_PATH: ${{ inputs.path }}
+          SCRIPT_NAME: ${{ inputs.run }}
         
 branding:
     icon: "slack"  

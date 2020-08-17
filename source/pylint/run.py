@@ -1,18 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os
 import json
 import math
-import argparse
 import subprocess
 
-
-# Script arguments
-parser = argparse.ArgumentParser()
-parser.add_argument("-p", "--path", help = "The path to run the linting process inside")
-
-args = parser.parse_args()
+print(subprocess.run("pwd", shell = True, capture_output = True).stdout.decode("utf-8"))
 
 # Pylint arguments and checks
 arguments = {
@@ -35,7 +28,7 @@ length = lambda number: math.floor(math.log10(number) + 1) if number > 0 else le
 
 
 # Execute linting
-for issue in json.loads(subprocess.run(f"find {args.path} -type f -name '*.py' | xargs pylint {parsed}", shell = True, capture_output = True).stdout.decode("utf-8")):
+for issue in json.loads(subprocess.run(f"find . -type f -name '*.py' | xargs pylint {parsed}", shell = True, capture_output = True).stdout.decode("utf-8")):
     
     if issue["path"] not in processed:
         processed[issue["path"]] = {"issues": [], "counts": {"warning": 0, "error": 0, "fatal": 0, "convention": 0, "information": 0, "refactor": 0}}
@@ -108,5 +101,5 @@ for file, data in processed.items():
 
 
 # Output to Github environment            
-subprocess.run(f"echo \"::set-env name=lint_errors::{total_errors}\"", shell = True)
-subprocess.run(f"echo \"::set-env name=lint_warnings::{total_warnings}\"", shell = True)
+subprocess.run(f"echo \"::set-env name=pylint_errors::{total_errors}\"", shell = True)
+subprocess.run(f"echo \"::set-env name=pylint_warnings::{total_warnings}\"", shell = True)
