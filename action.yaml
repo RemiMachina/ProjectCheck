@@ -1,0 +1,17 @@
+name: "Project Check"
+description: ""
+
+inputs:
+    path:
+        description: "The path to the directory to run over"    
+        required: true
+
+runs:
+      using: "docker"
+      image: "Dockerfile"
+      env:
+          CHECKOUT_PATH: ${{ inputs.path }}
+        
+branding:
+    icon: "slack"  
+    color: "orange"
