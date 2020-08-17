@@ -116,9 +116,13 @@ for file, data in processed.items():
             else:
                 print(line.format(newline_indent))
                 
+print(total_errors)
+print(total_warnings)
+print(total_suggestions)
+
 
 # Output to Github  
-subprocess.run(f"echo \"::set-output name=issues::{total_errors}\"", shell = True) 
-subprocess.run(f"echo \"::set-output name=warnings::{total_warnings}\"", shell = True) 
-# subprocess.run(f"echo \"::set-output name=suggestions::{total_suggestions}\"", shell = True) 
+subprocess.run(f"echo \"::set-output name=pylint_errors::{total_errors}\"", shell = True) 
+subprocess.run(f"echo \"::set-output name=pylint_warnings::{total_warnings}\"", shell = True) 
+subprocess.run(f"echo \"::set-output name=pylint_suggestions::{total_suggestions}\"", shell = True) 
 
