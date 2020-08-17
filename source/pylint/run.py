@@ -117,6 +117,6 @@ for file, data in processed.items():
 print(f"Errors: {total_errors}")
 print(f"Warnings: {total_warnings}")
 
-# Output to Github environment            
+# Output to Github environment  
+subprocess.run(f"echo \"::set-env name=pylint_warnings::{total_warnings}\"", shell = True)          
 subprocess.run(f"echo \"::set-env name=pylint_errors::{total_errors}\"", shell = True)
-subprocess.run(f"echo \"::set-env name=pylint_warnings::{total_warnings}\"", shell = True)
