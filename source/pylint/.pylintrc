@@ -8,9 +8,8 @@ unsafe-load-any-extension=no
 
 [MESSAGES CONTROL]
 disable=all
-enable=missing-module-docstring
+enable=missing-function-docstring
 
-        
 
 [REPORTS]
 output-format=json
