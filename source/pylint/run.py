@@ -9,9 +9,7 @@ print(subprocess.run("pwd", shell = True, capture_output = True).stdout.decode("
 
 # Pylint arguments and checks
 arguments = {
-    "output-format": "json",
-    "jobs": "0",
-    "persistent": "n",
+    "rcfile": "/source/pylint/.pylintrc",
     "exit-zero": ""
 }
 
@@ -53,7 +51,7 @@ for issue in json.loads(subprocess.run(f"find . -type f -name '*.py' | xargs pyl
             line = line[left_chop:]
         
         if index == 0:
-            issue["print"].append(" {}" + f"{issue['line']}:{issue['column']}" + "{} - " + f"({issue['message-id']})" + "{} " + line)
+            issue["print"].append(" {}" + f"{issue['line']}:{issue['column']}" + "{} - " + f"({issue['message-id']})" + "{} " + line + " ({issue['symbol']})")
         else:
             issue["print"].append(" {}" + line) 
                
@@ -83,7 +81,9 @@ for file, data in processed.items():
     print("")
     
     for key, count in list(filter(lambda a: a[1] != 0, data["counts"].items())):
-        print(f" {lint_titles[key]}: {count}")
+        print(f" {lint_titles[key]} | {count}")
+    
+    print("")
         
     for issue in data["issues"]:    
         

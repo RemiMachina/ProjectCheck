@@ -1,0 +1,38 @@
+[MASTER]
+jobs=0
+persistent=no
+limit-inference-results=100
+suggestion-mode=yes
+unsafe-load-any-extension=no
+
+
+[MESSAGES CONTROL]
+disable=all
+enable=missing-module-docstring
+
+        
+
+[REPORTS]
+output-format=json
+reports=no
+score=no
+
+
+[MISCELLANEOUS]
+notes=FIXME,
+      XXX,
+      TODO
+      
+
+[FORMAT]
+ignore-long-lines=^\s*(# )?<?https?://\S+>?$
+indent-after-paren=4
+indent-string='    '
+max-line-length=100
+single-line-class-stmt=no
+single-line-if-stmt=yes
+
+
+[EXCEPTIONS]
+overgeneral-exceptions=BaseException,
+                       Exception
