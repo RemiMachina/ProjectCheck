@@ -81,7 +81,7 @@ for file, data in processed.items():
     print(f" *** {file} ***")
     print("")
     
-    for key, count in list(filter(lambda a: a[1] != 0, data["counts"].items)):
+    for key, count in list(filter(lambda a: a[1] != 0, data["counts"].items())):
         print(" {lint_titles[key]}: {count}")
         
     for issue in data["issues"]:    
