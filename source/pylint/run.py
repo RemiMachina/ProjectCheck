@@ -51,7 +51,7 @@ for issue in json.loads(subprocess.run(f"find . -type f -name '*.py' | xargs pyl
             line = line[left_chop:]
         
         if index == 0:
-            issue["print"].append(" {}" + f"{issue['line']}:{issue['column']}" + "{} - " + f"({issue['message-id']})" + "{} " + line + " ({issue['symbol']})")
+            issue["print"].append(" {}" + f"{issue['line']}:{issue['column']}" + "{} - " + f"({issue['message-id']})" + "{} " + line + f" ({issue['symbol']})")
         else:
             issue["print"].append(" {}" + line) 
                
