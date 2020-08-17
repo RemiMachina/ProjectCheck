@@ -81,6 +81,7 @@ newline_indent = " " * (max_line + 1 + max_column + 3 + 2 + max_id + 2)
 
 total_errors = 0
 total_warnings = 0
+total_suggestions = 0
 
 for file, data in processed.items(): 
     
@@ -92,10 +93,12 @@ for file, data in processed.items():
     for key, count in list(filter(lambda a: a[1] != 0, data["counts"].items())):
         print(f" {lint_titles[key]} | {count}")
         
-        if key == "error":
+        if key == "error" or key == "fatal":
             total_errors += count
         elif key == "warning":
             total_warnings += count
+        else:
+            total_suggestions += count
         
     print("")
         
@@ -113,10 +116,8 @@ for file, data in processed.items():
             else:
                 print(line.format(newline_indent))
 
+output = {"errors": total_errors, "warnings": total_warnings, "suggestions": total_suggestions}
 
-print(f"Errors: {total_errors}")
-print(f"Warnings: {total_warnings}")
+# Output to Github  
+subprocess.run(f"echo \"::set-output name=pylint::{str(output)}\"", shell = True)      
 
-# Output to Github environment  
-subprocess.run(f"echo \"::set-env name=pylint_warnings::{total_warnings}\"", shell = True)          
-subprocess.run(f"echo \"::set-env name=pylint_errors::{total_errors}\"", shell = True)
