@@ -48,8 +48,16 @@ for issue in json.loads(subprocess.run(f"find {args.path} -type f -name '*.py' |
     
     issue["print"] = []
     
+    left_chop = 0
+    
     # Split multi-line outputs
-    for index, line in enumerate(list(filter(lambda a: a != "", issue["message"].replace("{", "[").replace("}", "]").split("\n")))):
+    for index, line in enumerate(list(filter(lambda a: a != "", issue["message"].replace("{", "{{").replace("}", "}}").split("\n")))):
+        
+        if index == 1 and len(line) - len(line.lstrip()) != 0:
+            left_chop = len(line) - len(line.lstrip())
+        
+        if index >= 1 and left_chop != 0:
+            line = line[left_chop:]
         
         if index == 0:
             issue["print"].append(" {}" + f"{issue['line']}:{issue['column']}" + "{} - " + f"({issue['message-id']})" + "{} " + line)
@@ -82,7 +90,7 @@ for file, data in processed.items():
     print("")
     
     for key, count in list(filter(lambda a: a[1] != 0, data["counts"].items())):
-        print(" {lint_titles[key]}: {count}")
+        print(f" {lint_titles[key]}: {count}")
         
     for issue in data["issues"]:    
         
