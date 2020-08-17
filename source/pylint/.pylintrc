@@ -7,8 +7,10 @@ unsafe-load-any-extension=no
 
 
 [MESSAGES CONTROL]
-disable=all
-enable=missing-function-docstring
+disable=empty-docstring,
+        missing-class-docstring,
+        missing-function-docstring,
+        missing-module-docstring
 
 
 [REPORTS]

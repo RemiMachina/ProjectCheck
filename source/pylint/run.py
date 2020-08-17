@@ -24,12 +24,30 @@ max_id = 0
 
 length = lambda number: math.floor(math.log10(number) + 1) if number > 0 else len(str(number))
 
+lint_titles = {
+    "warning": "⚠️ Warnings",
+    "error": "🛑 Errors",
+    "fatal": "🚨 Fatal Errors",
+    "convention": "👍 Conventions",
+    "information": "💁‍♀️ Information",
+    "refactor": "🔧 Refactor"
+}
+
 
 # Execute linting
 for issue in json.loads(subprocess.run(f"find . -type f -name '*.py' | xargs pylint {parsed}", shell = True, capture_output = True).stdout.decode("utf-8")):
     
     if issue["path"] not in processed:
-        processed[issue["path"]] = {"issues": [], "counts": {"warning": 0, "error": 0, "fatal": 0, "convention": 0, "information": 0, "refactor": 0}}
+        processed[issue["path"]] = {"issues": [], "counts": dict(map(lambda a: (a, 0), lint_titles.keys())), "keys": []}
+    
+    # JSON output appears to have duplicate warnings
+    # This key prevents those duplications from being added
+    key = f"{issue['line']}:issue['column']:issue['type']:issue['symbol']:issue['message']"
+    
+    if key in processed[issue["path"]]["keys"]:
+        continue
+        
+    processed[issue["path"]]["keys"].append(key)
     
     processed[issue["path"]]["counts"][issue["type"]] += 1
     
@@ -60,15 +78,6 @@ for issue in json.loads(subprocess.run(f"find . -type f -name '*.py' | xargs pyl
 
 # Run formatting and output
 newline_indent = " " * (max_line + 1 + max_column + 3 + 2 + max_id + 2)
-
-lint_titles = {
-    "warning": "⚠️ Warnings",
-    "error": "🛑 Errors",
-    "fatal": "🚨 Fatal Errors",
-    "convention": "👍 Conventions",
-    "information": "💁‍♀️ Information",
-    "refactor": "🔧 Refactor"
-}
 
 total_errors = 0
 total_warnings = 0
