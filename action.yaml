@@ -10,7 +10,7 @@ runs:
       using: "docker"
       image: "Dockerfile"
       env:
-          SCRIPT_NAME: ${{ inputs.run }}
+          RUN_SCRIPT: ${{ inputs.run }}
         
 branding:
     icon: "slack"  

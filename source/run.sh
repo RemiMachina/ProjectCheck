@@ -1,3 +1,3 @@
 #!/bin/sh -l
 
-python /source/"$CHECKOUT_PATH"/run.py
+python /source/"$RUN_SCRIPT"/run.py
