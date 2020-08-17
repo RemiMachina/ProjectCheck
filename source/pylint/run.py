@@ -120,5 +120,5 @@ for file, data in processed.items():
 # Output to Github  
 subprocess.run(f"echo \"::set-output name=issues::{total_errors}\"", shell = True) 
 subprocess.run(f"echo \"::set-output name=warnings::{total_warnings}\"", shell = True) 
-subprocess.run(f"echo \"::set-output name=suggestions::{total_suggestions}\"", shell = True) 
+# subprocess.run(f"echo \"::set-output name=suggestions::{total_suggestions}\"", shell = True) 
 
