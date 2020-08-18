@@ -8,6 +8,7 @@ import subprocess
 # Pylint arguments and checks
 arguments = {
     "rcfile": "/source/pylint/.pylintrc",
+    "errors-only": "",
     "exit-zero": ""
 }
 
