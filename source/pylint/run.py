@@ -5,8 +5,6 @@ import json
 import math
 import subprocess
 
-print(subprocess.run("pwd", shell = True, capture_output = True).stdout.decode("utf-8"))
-
 # Pylint arguments and checks
 arguments = {
     "rcfile": "/source/pylint/.pylintrc",
@@ -24,11 +22,11 @@ max_id = 0
 
 length = lambda number: math.floor(math.log10(number) + 1) if number > 0 else len(str(number))
 
-lint_titles = {
+lint_mappings = {
     "warning": "⚠️ Warnings",
     "error": "🛑 Errors",
     "fatal": "🚨 Fatal Errors",
-    "convention": "👍 Conventions",
+    "convention": "👎 Conventions",
     "information": "💁‍♀️ Information",
     "refactor": "🔧 Refactor"
 }
@@ -38,7 +36,7 @@ lint_titles = {
 for issue in json.loads(subprocess.run(f"find . -type f -name '*.py' | xargs pylint {parsed}", shell = True, capture_output = True).stdout.decode("utf-8")):
     
     if issue["path"] not in processed:
-        processed[issue["path"]] = {"issues": [], "counts": dict(map(lambda a: (a, 0), lint_titles.keys())), "keys": []}
+        processed[issue["path"]] = {"issues": [], "counts": dict(map(lambda a: (a, 0), lint_mappings.keys())), "keys": []}
     
     # JSON output appears to have duplicate warnings
     # This key prevents those duplications from being added
@@ -91,7 +89,7 @@ for file, data in processed.items():
     print("")
     
     for key, count in list(filter(lambda a: a[1] != 0, data["counts"].items())):
-        print(f" {lint_titles[key]} | {count}")
+        print(f" {lint_mappings[key]} | {count}")
         
         if key == "error" or key == "fatal":
             total_errors += count
