@@ -12,6 +12,9 @@ arguments = {
     "exit-zero": ""
 }
 
+with open("/source/pylint/.pylintrc", "r+") as file:
+    print(file.read())
+
 parse = lambda key, value: f"--{key} {value}" if value != "" else  f"--{key}"
 parsed = " ".join(list(map(lambda a: parse(*a), arguments.items())))
 
