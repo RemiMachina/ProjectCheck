@@ -16,8 +16,11 @@ jobs:
             with:
                 ref: ${{ github.event.inputs.branch }}
 
-          - name: Test
-            run: echo $(git status)
+          - name: Tag
+            run: git tag -m "Initial release" -f -a v1
+            
+          - name: Push
+            run: git push -f --tags
     
           # - uses: Klemensas/action-autotag@stable
           #   with:
