@@ -31,6 +31,8 @@ max_code = 0
 
 output = subprocess.run(f"find . -type f -name '*.py' | xargs pydocstyle {arguments}", shell = True, capture_output = True).stdout.decode("utf-8").split("\n")
 
+print(output)
+
 for source, reason in zip(output[0::2], output[1::2]):
     
     path = re.split(r":([0-9]+)", source)[0][2:]
