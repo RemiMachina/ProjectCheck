@@ -10,7 +10,8 @@ unsafe-load-any-extension=no
 disable=empty-docstring,
         missing-class-docstring,
         missing-function-docstring,
-        missing-module-docstring
+        missing-module-docstring,
+        import-error
 
 
 [REPORTS]
