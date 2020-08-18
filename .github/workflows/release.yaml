@@ -16,6 +16,9 @@ jobs:
             with:
                 ref: ${{ github.event.inputs.branch }}
 
+          - run: git config --global user.email "cschacher@remi.ai"
+          - run: git config --global user.name "Github Automator"
+
           - name: Tag
             run: git tag -m "Initial release" -f -a v1
             
