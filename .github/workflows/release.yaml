@@ -1,0 +1,50 @@
+name: Auto-Release Workflow
+
+on: [ push ]
+
+jobs:
+    
+    auto_release:
+        
+        name: Auto Release
+        runs-on: ubuntu-latest
+        steps:
+            
+          - name: Checkout
+            id: checkout
+            uses: actions/checkout@v2
+            with:
+                ref: ${{ github.event.inputs.branch }}
+
+          - name: Test
+            run: echo $(git status)
+    
+          # - uses: Klemensas/action-autotag@stable
+          #   with:
+          #       GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          #       version: "${{ steps.previous_step.outputs.version }}"
+        
+    # check_base:
+    # 
+    #     name: Check Codebase
+    #     runs-on: ubuntu-latest
+    #     steps:
+    # 
+    # 
+    #       - name: Pylint
+    #         id: pylint
+    #         uses: remimachina/projectcheck@v1
+    #         with:
+    #             run: pylint
+    # 
+    #       - name: Slack Message
+    #         id: slack
+    #         if: ${{ always() }}
+    #         uses: remimachina/projectslack@v1
+    #         with: 
+    #             script: gha_code_check
+    #             payload: '{"oauth":"${{ secrets.SLACK_REMIBOT_OAUTH }}", "pylint": {"errors": ${{ steps.pylint.outputs.pylint_errors }}, "warnings": ${{ steps.pylint.outputs.pylint_warnings }}, "suggestions": ${{ steps.pylint.outputs.pylint_suggestions }}}}'
+                
+                
+                
+                
