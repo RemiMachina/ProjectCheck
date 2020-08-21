@@ -7,16 +7,14 @@ import subprocess
 
 # Pylint arguments and checks
 arguments = {
-    "rcfile": "/source/pylint/.pylintrc",
-    "errors-only": "",
-    "exit-zero": ""
+    "rcfile": "/source/pylint/.pylintrc"
 }
 
 with open("/source/pylint/.pylintrc", "r+") as file:
     print(file.read())
     print("")
 
-parse = lambda key, value: f"--{key} {value}" if value != "" else  f"--{key}"
+parse = lambda key, value: f"--{key}={value}" if value != "" else  f"--{key}"
 parsed = " ".join(list(map(lambda a: parse(*a), arguments.items())))
 
 processed = {}
