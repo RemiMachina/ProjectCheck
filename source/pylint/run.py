@@ -12,10 +12,12 @@ arguments = {
 
 with open("/source/pylint/.pylintrc", "r+") as file:
     print(file.read())
-    print("")
+    
 
 parse = lambda key, value: f"--{key}={value}" if value != "" else  f"--{key}"
 parsed = " ".join(list(map(lambda a: parse(*a), arguments.items())))
+
+print(parsed)
 
 processed = {}
 
