@@ -186,7 +186,7 @@ class LintReport:
     
 class Linter:
     
-    def __init__(self, rcfile = "config/.pylintrc"):
+    def __init__(self, rcfile = "/config/.pylintrc"):
     
         self.categories = {
             "warning": "⚠️ Warnings",
@@ -211,7 +211,7 @@ class Linter:
         
         report = LintReport()
         files = " ".join(list(map(lambda file: file.replace(" ", "\ "), util.files())))
-
+        
         for path, issues in itertools.groupby(json.loads(util.exec(f"pylint {self.arguments} {files}")), key = lambda a: a["path"]):
             
             blame = git.blame(path = path)
