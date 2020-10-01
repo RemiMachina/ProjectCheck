@@ -53,7 +53,7 @@ class GitIssue:
         return GitIssue(
             number = None,
             title = f"[{first.message_id}] " + first.symbol.replace("-", " ").capitalize() + " " + first.type + " in " + first.path,
-            body = f"{len(lints)} Issues\r\n " + "".join(list(map(lambda a: base.format(a.message, a.line), lints))),
+            body = "".join(list(map(lambda a: base.format(a.message, a.line), lints))),
             labels = ["autolint", first.type],
             assignees = list(set(list(map(lambda a: a.blame.author, lints)))),
             local = True
