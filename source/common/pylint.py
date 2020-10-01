@@ -12,7 +12,6 @@ from typing import List, Dict
 from functools import reduce
 
 from .util import util
-from .errors import LintEmpty
 # from .git import GitBlame
 
 
