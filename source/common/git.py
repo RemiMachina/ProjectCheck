@@ -85,7 +85,6 @@ class GitIssue:
         }
     
     def __eq__(self, other):
-        if other == None: print("IT'S A NONE")
         return self.title == other.title and self.body == other.body and set(self.labels) == set(other.labels) and set(self.assignees) == set(other.assignees)
         
     
@@ -188,11 +187,11 @@ class Git:
 
         for title, update in updates.items():
             
-            if update["remote"] == None:
+            if update["remote"] is None:
                 self.create_issue(issue = update["local"])
-            elif update["local"] == None:
+            elif update["local"] is None:
                 self.close_issue(issue = update["remote"])
-            elif update["local"] != None and update["remote"] != None:
+            elif update["local"] is not None and update["remote"] is not None:
                 self.update_issue(new = update["local"], old = update["remote"])
 
     def create_issue(self, issue: GitIssue): 
