@@ -84,6 +84,16 @@ class GitIssue:
             "state": "open"
         }
     
+    def __eq__(self, other):
+        
+        return (
+            self.title == other.title
+            and self.body == other.body
+            and set(self.labels) == set(other.labels)
+            and set(self.assignees) == set(other.assignees)
+        )
+        
+    
 class GitBlame:
 
     def __init__(self, porcelain, focus):
@@ -207,6 +217,8 @@ class Git:
         )
 
     def update_issue(self, new: GitIssue, old: GitIssue):
+
+        if new == old: return
 
         response = requests.patch(
             f"https://api.github.com/repos/{self.repo}/issues/{old.number}", 
