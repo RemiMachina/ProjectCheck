@@ -5,17 +5,32 @@ inputs:
     run:
         description: "The name of the action to execute"    
         required: true
+    before:
+        description: "The SHA of the previous commit -> see: {{ github.event.before }}"
+        required: true
+    after:
+        description: "The SHA of the new commit -> see: {{ github.sha }}"
+        required: true
+    owner:
+        description: "The owner of the current repository -> see: {{ github.repository_owner }}"
+        required: true
+    repository:
+        description: "The name of the current repository -> see: {{ github.repository }}"
+        required: true
+    token:
+        description: "The token of the github action -> see: {{ secrets.GITHUB_TOKEN }}"
+        required: true
     
 runs:
       using: "docker"
       image: "Dockerfile"
       env:
           RUN_SCRIPT: ${{ inputs.run }}
-          SHA_BEFORE: ${{ github.event.before }}
-          SHA_AFTER: ${{ github.sha }}
-          ORG_NAME: ${{ github.repository }}
-          REPO_NAME: ${{ github.repository_owner }}
-          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SHA_BEFORE: ${{ inputs.before }}
+          SHA_AFTER: ${{ inputs.after }}
+          ORG_NAME: ${{ inputs.owner }}
+          REPO_NAME: ${{ inputs.repository }}
+          REPO_TOKEN: ${{ inputs.token }}
         
 branding:
     icon: "slack"  
