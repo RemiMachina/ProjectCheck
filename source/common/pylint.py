@@ -212,7 +212,13 @@ class Linter:
         report = LintReport()
         files = " ".join(list(map(lambda file: file.replace(" ", "\ "), util.files())))
         
-        for path, issues in itertools.groupby(json.loads(util.exec(f"pylint {self.arguments} {files}")), key = lambda a: a["path"]):
+        command = f"pylint {self.arguments} {files}"
+        data = util.exec(f"pylint {self.arguments} {files}")
+        
+        print(command)
+        print(data)
+        
+        for path, issues in itertools.groupby(json.loads(data), key = lambda a: a["path"]):
             
             blame = git.blame(path = path)
             file = LintFile(path = path, blame = blame)
