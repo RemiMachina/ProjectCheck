@@ -9,10 +9,7 @@ unsafe-load-any-extension=no
 [MESSAGES CONTROL]
 disable=R,
         C,
-        empty-docstring,
-        missing-class-docstring,
-        missing-function-docstring,
-        missing-module-docstring,
+        W,
         import-error
 
 

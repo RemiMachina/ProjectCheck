@@ -5,12 +5,17 @@ inputs:
     run:
         description: "The name of the action to execute"    
         required: true
-
+    
 runs:
       using: "docker"
       image: "Dockerfile"
       env:
           RUN_SCRIPT: ${{ inputs.run }}
+          SHA_BEFORE: ${{ github.event.before }}
+          SHA_AFTER: ${{ github.sha }}
+          ORG_NAME: ${{ github.repository }}
+          REPO_NAME: ${{ github.repository_owner }}
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
 branding:
     icon: "slack"  
