@@ -217,7 +217,7 @@ class Linter:
             for issue in (LintIssue(issue = raw) for raw in issues):
                 
                 try:
-                    print(blame[issue.column].code)
+                    print(blame[issue.line - 1].code)
                     print(issue.message)
                 except:
                     print(path)
