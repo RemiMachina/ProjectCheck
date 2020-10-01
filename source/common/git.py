@@ -102,7 +102,7 @@ class GitBlame:
         self.author = lookup["author"]
         self.committer = lookup["committer"]
         self.summary = lookup["summary"]
-        self.path = lookup["path"]
+        # self.path = lookup["path"]
         
 
                 
