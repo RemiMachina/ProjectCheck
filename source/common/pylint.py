@@ -213,8 +213,17 @@ class Linter:
             
             blame = git.blame(path = path)
             file = LintFile(path = path, blame = blame)
-            
+            print(path)
             for issue in (LintIssue(issue = raw) for raw in issues):
+                
+                try:
+                    print(blame[issue.column].code)
+                    print(issue.message)
+                except:
+                    print(path)
+                    print(blame)
+                    return 1/0
+            
             
                 if file.is_duplicate(issue):  
                     continue
