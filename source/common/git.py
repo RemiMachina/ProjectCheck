@@ -197,7 +197,7 @@ class Git:
                 self.create_issue(issue = update["local"])
             elif update["local"] == None:
                 self.close_issue(issue = update["remote"])
-            else:
+            elif update["local"] != None and update["remote"] != None:
                 self.update_issue(new = update["local"], old = update["remote"])
 
     def create_issue(self, issue: GitIssue): 
