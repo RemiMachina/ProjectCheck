@@ -146,7 +146,7 @@ class Git:
         
         for path, file_report in report.reports.items():
             
-            for hash, lints in file_report.lints:
+            for hash, lints in file_report.lints.items():
                 
                 issues += GitIssue.from_lint(lints = lints, repo = self.repo, after = self.after)
 
