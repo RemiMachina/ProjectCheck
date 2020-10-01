@@ -16,7 +16,7 @@ class GitIssue:
 
     def __init__(self, number: int, title: str, body: str, labels: List[str], assignees: List[str], local: bool):
 
-        self.id = id
+        self.number = number
         self.title = title
         self.body = body
         self.labels = labels
