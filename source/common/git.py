@@ -164,7 +164,7 @@ class Git:
         
         return list(filter(
             lambda a: 
-            a != None, 
+            a is not None, 
             map(
                 lambda b: 
                 GitIssue.from_json(b), 
