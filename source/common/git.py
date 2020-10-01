@@ -97,19 +97,14 @@ class GitBlame:
         self.new = self.sha in focus
         self.code = porcelain.pop(-1)
 
-        try:
+        safe_split = lambda a: tuple(a) if len(a) == 2 else tuple(a + [""])
 
-            lookup = dict(map(lambda a: (a.split(" ", 1)), porcelain))
-            
-        except ValueError:
-            
-            print(porcelain)
-            return 1/0
-
+        lookup = dict(map(lambda a: safe_split(a.split(" ", 1)), porcelain))
+        
         self.author = lookup["author"]
         self.committer = lookup["committer"]
         self.summary = lookup["summary"]
-        # self.path = lookup["path"]
+        self.path = lookup["filename"]
         
 
                 
