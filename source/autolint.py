@@ -18,6 +18,6 @@ git = Git(
 
 report = linter.lint(git = git)
 
-# linter.terminal(report = report)
+linter.terminal(report = report)
 
 git.sync_issues(report = report)

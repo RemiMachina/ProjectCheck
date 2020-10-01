@@ -153,17 +153,14 @@ class Git:
     def local_issues(self, report: LintReport) -> List[GitIssue]:
         
         issues = []
-        count = 0
         
         for path, file_report in report.reports.items():
-            count += 1
+            
             issues += list(map(
                 lambda a: 
                 GitIssue.from_lint(lints = a, repo = self.repo, after = self.after), 
                 file_report.lints.values()
             ))
-            if count >= 2:
-                break
             
         return issues
         
