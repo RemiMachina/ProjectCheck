@@ -11,11 +11,8 @@ inputs:
     after:
         description: "The SHA of the new commit -> see: {{ github.sha }}"
         required: true
-    owner:
-        description: "The owner of the current repository -> see: {{ github.repository_owner }}"
-        required: true
     repository:
-        description: "The name of the current repository -> see: {{ github.repository }}"
+        description: "The name of the owner & repository -> see: {{ github.repository }}"
         required: true
     token:
         description: "The token of the github action -> see: {{ secrets.GITHUB_TOKEN }}"
@@ -28,7 +25,6 @@ runs:
           RUN_SCRIPT: ${{ inputs.run }}
           SHA_BEFORE: ${{ inputs.before }}
           SHA_AFTER: ${{ inputs.after }}
-          ORG_NAME: ${{ inputs.owner }}
           REPO_NAME: ${{ inputs.repository }}
           REPO_TOKEN: ${{ inputs.token }}
         

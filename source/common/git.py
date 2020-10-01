@@ -44,11 +44,11 @@ class GitIssue:
         )
 
     @staticmethod
-    def from_lint(lints: List[LintIssue], org: str, repo: str, after: str):
+    def from_lint(lints: List[LintIssue], repo: str, after: str):
         
         first = lints[0]
         empty = "{}"
-        base = f"{empty}\r\nhttps://github.com/{org}/{repo}/blob/{after}/{first.path}#L{empty}\r\n"
+        base = f"{empty}\r\nhttps://github.com/{repo}/blob/{after}/{first.path}#L{empty}\r\n"
         
         return GitIssue(
             number = None,
@@ -110,12 +110,11 @@ class GitBlame:
             
 class Git:
 
-    def __init__(self, before: str, after: str, repo: str, org: str, token: str):
+    def __init__(self, before: str, after: str, repo: str, token: str):
 
         self.before = before
         self.after = after
         self.repo = repo
-        self.org = org
         self.auth = {"Authorization": f"Bearer {token}"}
 
         # Produce a list of the git hashes that are included in the commit
@@ -145,7 +144,7 @@ class Git:
             count += 1
             issues += list(map(
                 lambda a: 
-                GitIssue.from_lint(lints = a, org = self.org, repo = self.repo, after = self.after), 
+                GitIssue.from_lint(lints = a, repo = self.repo, after = self.after), 
                 file_report.lints.values()
             ))
             if count >= 2:
@@ -155,7 +154,7 @@ class Git:
         
     def remote_issues(self) -> List[GitIssue]:
         
-        response = requests.get(f"https://api.github.com/repos/{self.org}/{self.repo}/issues", headers=self.auth)
+        response = requests.get(f"https://api.github.com/repos/{self.repo}/issues", headers=self.auth)
         
         return list(filter(
             lambda a: 
@@ -192,7 +191,7 @@ class Git:
     def create_issue(self, issue: GitIssue): 
 
         response = requests.post(
-            f"https://api.github.com/repos/{self.org}/{self.repo}/issues", 
+            f"https://api.github.com/repos/{self.repo}/issues", 
             headers = self.auth, 
             json = issue.prepare_create()
         )
@@ -200,7 +199,7 @@ class Git:
     def close_issue(self, issue: GitIssue):
 
         response = requests.patch(
-            f"https://api.github.com/repos/{self.org}/{self.repo}/issues/{issue.number}", 
+            f"https://api.github.com/repos/{self.repo}/issues/{issue.number}", 
             headers = self.auth, 
             json = issue.prepare_close()
         )
@@ -208,7 +207,7 @@ class Git:
     def update_issue(self, new: GitIssue, old: GitIssue):
 
         response = requests.patch(
-            f"https://api.github.com/repos/{self.org}/{self.repo}/issues/{old.number}", 
+            f"https://api.github.com/repos/{self.repo}/issues/{old.number}", 
             headers = self.auth, 
             json = new.prepare_update()
         )
