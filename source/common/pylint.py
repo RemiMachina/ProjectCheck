@@ -20,9 +20,7 @@ from .util import util
         
 class LintIssue:
     
-    def __init__(self, issue: Dict[str, str], blame):
-        
-        self.blame = blame
+    def __init__(self, issue: Dict[str, str]):
         
         self.path = issue["path"]
         self.line = issue["line"]
@@ -216,7 +214,7 @@ class Linter:
             blame = git.blame(path = path)
             file = LintFile(path = path, blame = blame)
             
-            for issue in (LintIssue(issue = raw, blame = blame[raw["column"] - 1]) for raw in issues):
+            for issue in (LintIssue(issue = raw) for raw in issues):
             
                 if file.is_duplicate(issue):  
                     continue
