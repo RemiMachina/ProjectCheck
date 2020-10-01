@@ -6,8 +6,6 @@ import math
 import copy
 import itertools
 
-import hashlib
-
 from typing import List, Dict
 from functools import reduce
 
@@ -35,7 +33,7 @@ class LintIssue:
         # JSON output appears to have duplicate warnings
         # This key prevents those duplications from being processed
         self.key = f'{self.line}:{self.column}:{self.type}:{self.symbol}:{self.message}'
-        self.hash = hashlib.md5(f"{self.path}:{self.message_id}".encode())
+        self.hash = f"{self.path}:{self.message_id}"
     
         self.new = True
     
