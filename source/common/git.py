@@ -57,7 +57,7 @@ class GitIssue:
                 title = f"[{first.message_id}] " + first.symbol.replace("-", " ").capitalize() + " " + first.type + " in " + first.path,
                 body = reduce(lambda a, b: a + base.format(b.message, b.line), lints, ""),
                 labels = ["autolint", first.type],
-                assignees = list(reduce(lambda a, b: a.add(b.blame.author), lints, set())),
+                assignees = set(list(map(lambda a: a.blame.author, lints))),
                 local = True
             )
             
