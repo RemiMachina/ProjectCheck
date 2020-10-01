@@ -15,4 +15,4 @@ class util:
     @staticmethod
     def files() -> List[str]:
         
-        return list(map(lambda b: b[2:], filter(lambda a: a != "", util.exec("find . -type f -name '*.py'").split("\n"))))
+        return list(map(lambda b: b, filter(lambda a: a != "", util.exec("find . -type f -name '*.py'").split("\n"))))
