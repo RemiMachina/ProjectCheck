@@ -50,24 +50,14 @@ class GitIssue:
         empty = "{}"
         base = f"{empty}\r\nhttps://github.com/{repo}/blob/{after}/{first.path}#L{empty}\r\n"
         
-        try:
-        
-            return GitIssue(
-                number = None,
-                title = f"[{first.message_id}] " + first.symbol.replace("-", " ").capitalize() + " " + first.type + " in " + first.path,
-                body = "".join(list(map(lambda a: base.format(a.message, a.line), lints))),
-                labels = ["autolint", first.type],
-                assignees = list(set(list(map(lambda a: a.blame.author, lints)))),
-                local = True
-            )
-            
-        except:
-            
-            print(lints)
-            print(lints[0])
-            for a in lints:
-                print(a.blame.author)
-            return 1/0
+        return GitIssue(
+            number = None,
+            title = f"[{first.message_id}] " + first.symbol.replace("-", " ").capitalize() + " " + first.type + " in " + first.path,
+            body = f"{len(lints)} Issues\r\n " + "".join(list(map(lambda a: base.format(a.message, a.line), lints))),
+            labels = ["autolint", first.type],
+            assignees = list(set(list(map(lambda a: a.blame.author, lints)))),
+            local = True
+        )
         
     def prepare_create(self) -> Dict[str, any]:
         
