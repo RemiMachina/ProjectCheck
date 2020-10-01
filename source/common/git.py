@@ -108,7 +108,6 @@ class GitBlame:
         self.author = lookup["author"]
         self.committer = lookup["committer"]
         self.summary = lookup["summary"]
-        self.path = lookup["filename"]
         
 
                 
@@ -132,7 +131,7 @@ class Git:
         # Produce a git blame for each line in the file
         path = path.replace(" ", "\ ")
         porcelain = util.exec(f"git blame --line-porcelain {path}").split("\n")
-        endpoints = [index + 2 for index, line in enumerate(porcelain) if line == f"filename {path}"]
+        endpoints = [index + 2 for index, line in enumerate(porcelain) if line[0:9] == "filename "]
         startpoints = [0] + endpoints[:-1]
 
         return list(map(
