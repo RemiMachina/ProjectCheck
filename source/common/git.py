@@ -146,12 +146,10 @@ class Git:
         
         for path, file_report in report.reports.items():
             
-            issues += list(map(
-                lambda a: 
-                GitIssue.from_lint(lints = a, repo = self.repo, after = self.after), 
-                file_report.lints.values()
-            ))
-            
+            for hash, lints in file_report.lints:
+                
+                issues += GitIssue.from_lint(lints = lints, repo = self.repo, after = self.after)
+
         return issues
         
     def remote_issues(self) -> List[GitIssue]:
