@@ -97,7 +97,14 @@ class GitBlame:
         self.new = self.sha in focus
         self.code = porcelain.pop(-1)
 
-        lookup = dict(map(lambda a: (a.split(" ", 1)), porcelain))
+        try:
+
+            lookup = dict(map(lambda a: (a.split(" ", 1)), porcelain))
+            
+        except ValueError:
+            
+            print(porcelain)
+            return 1/0
 
         self.author = lookup["author"]
         self.committer = lookup["committer"]
