@@ -85,13 +85,8 @@ class GitIssue:
         }
     
     def __eq__(self, other):
-        
-        return (
-            self.title == other.title
-            and self.body == other.body
-            and set(self.labels) == set(other.labels)
-            and set(self.assignees) == set(other.assignees)
-        )
+        if other == None: print("IT'S A NONE")
+        return self.title == other.title and self.body == other.body and set(self.labels) == set(other.labels) and set(self.assignees) == set(other.assignees)
         
     
 class GitBlame:
