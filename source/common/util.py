@@ -10,7 +10,12 @@ class util:
     @staticmethod
     def exec(command) -> str:
         
-        return subprocess.run(command, shell=True, capture_output=True).stdout.decode("utf-8")
+        run = subprocess.run(command, shell=True, capture_output=True)
+        
+        if run.stderr == b"":
+            return run.stdout.decode("utf-8")
+        else:
+            return run.stderr.decode("utf-8")
     
     @staticmethod
     def files() -> List[str]:
