@@ -215,7 +215,7 @@ class Linter:
             
             blame = git.blame(path = path)
             file = LintFile(path = path, blame = blame)
-            print(path)
+        
             for issue in (LintIssue(issue = raw, blame = blame[raw["line"] - 1]) for raw in issues):
                 
                 if file.is_duplicate(issue):  
