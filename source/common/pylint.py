@@ -220,8 +220,11 @@ class Linter:
                     print(blame[issue.line - 1].code)
                     print(issue.message)
                 except:
+                    print("ERROR")
                     print(path)
                     print(blame)
+                    print(issue.message)
+                    print(issue.line - 1)
                     return 1/0
             
             
