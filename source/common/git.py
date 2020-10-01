@@ -148,7 +148,7 @@ class Git:
             
             for _, lints in file_report.lints.items():
                 
-                issues += GitIssue.from_lint(lints = lints, repo = self.repo, after = self.after)
+                issues.append(GitIssue.from_lint(lints = lints, repo = self.repo, after = self.after))
 
         return issues
         
