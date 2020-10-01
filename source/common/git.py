@@ -119,6 +119,7 @@ class Git:
 
         # Produce a list of the git hashes that are included in the commit
         shas = util.exec("git log --format=format:%H").split("\n")
+        print(shas)
         self.focus = shas[shas.index(self.after):shas.index(self.before)]
 
     def blame(self, path: str) -> List[GitBlame]:
