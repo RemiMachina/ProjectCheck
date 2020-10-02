@@ -199,7 +199,7 @@ class Git:
                 print("close")
                 self.close_issue(issue = update["remote"])
             elif update["local"] is not None and update["remote"] is not None:
-                print("close")
+                print("update")
                 self.update_issue(new = update["local"], old = update["remote"])
             else:
                 print("none")
@@ -212,6 +212,9 @@ class Git:
             headers = self.auth, 
             json = issue.prepare_create()
         )
+        
+        print(response)
+        print(response.json())
 
     def close_issue(self, issue: GitIssue):
 
@@ -223,7 +226,9 @@ class Git:
 
     def update_issue(self, new: GitIssue, old: GitIssue):
 
-        if new == old: return
+        if new == old: 
+            print("new == old")
+            return
 
         response = requests.patch(
             f"https://api.github.com/repos/{self.repo}/issues/{old.number}", 
