@@ -86,8 +86,7 @@ class GitIssue:
     
     def __eq__(self, other):
         return self.title == other.title and self.body == other.body and set(self.labels) == set(other.labels) and set(self.assignees) == set(other.assignees)
-        
-    
+            
 class GitBlame:
 
     def __init__(self, porcelain, focus):
@@ -144,12 +143,22 @@ class Git:
         
         issues = []
         
+        # for path, file_report in report.reports.items():
+        #     print(path)
+        #     for hash, lints in file_report.lints.items():
+        #         print(hash)
+        #         print(len(lints))
+        
         for path, file_report in report.reports.items():
-            
-            for _, lints in file_report.lints.items():
-                
-                issues.append(GitIssue.from_lint(lints = lints, repo = self.repo, after = self.after))
-
+            print(path)
+            for hash, lints in file_report.lints.items():
+                print(hash)
+                print(len(lints))
+                issue = GitIssue.from_lint(lints = lints, repo = self.repo, after = self.after)
+                print(issue.body)
+                print("")
+                issues.append(issue)
+            print("")
         return issues
         
     def remote_issues(self) -> List[GitIssue]:

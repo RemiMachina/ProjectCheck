@@ -18,11 +18,11 @@ git = Git(
 
 report = linter.lint(git = git)
 
-for path, file_report in report.reports.items():
-    print(path)
-    for hash, lints in file_report.lints.items():
-        print(hash)
-        print(len(lints))
+# for path, file_report in report.reports.items():
+#     print(path)
+#     for hash, lints in file_report.lints.items():
+#         print(hash)
+#         print(len(lints))
 
 # linter.terminal(report = report)
 
