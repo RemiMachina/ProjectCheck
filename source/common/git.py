@@ -169,7 +169,7 @@ class Git:
                     GitIssue.from_json(b), 
                     response.json()
                 )
-            )))
+            ))
             
             if len(issues) / page < max:
                 finished = True
@@ -185,41 +185,21 @@ class Git:
         
         for local in self.local_issues(report = report):
             updates[local.title] = {"local": local, "remote": None}
-        
-        print("BEFORE")
-        print(len(updates))
-        print(updates)
-        print("")
-        print("")
-        print("")
-        
+
         for remote in self.remote_issues():
             if remote.title in updates:
                 updates[remote.title]["remote"] = remote
             else:
                 updates[remote.title] = {"local": None, "remote": remote}
 
-        print("AFTER")
-        print(len(updates))
-        print(updates)
-        print("")
-        print("")
-        print("")
-
         for title, update in updates.items():
             print(title)
             if update["remote"] is None:
-                print("create")
                 self.create_issue(issue = update["local"])
             elif update["local"] is None:
-                print("close")
                 self.close_issue(issue = update["remote"])
             elif update["local"] is not None and update["remote"] is not None:
-                print("update")
                 self.update_issue(new = update["local"], old = update["remote"])
-            else:
-                print("none")
-            print("")
 
     def create_issue(self, issue: GitIssue): 
 
