@@ -83,9 +83,6 @@ class GitIssue:
             "assignees": self.assignees,
             "state": "open"
         }
-    
-    def __eq__(self, other):
-        return self.title == other.title and self.body == other.body and set(self.labels) == set(other.labels) and set(self.assignees) == set(other.assignees)
             
 class GitBlame:
 
@@ -226,8 +223,8 @@ class Git:
 
     def update_issue(self, new: GitIssue, old: GitIssue):
 
-        if new == old: 
-            print("new == old")
+        if (new.title == old.title) and (new.body == old.body) and (set(new.labels) == set(old.labels)) and (set(new.assignees) == set(old.assignees)):
+            print("No update required")
             return
 
         response = requests.patch(
