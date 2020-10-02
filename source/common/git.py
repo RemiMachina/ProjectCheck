@@ -161,7 +161,7 @@ class Git:
         
             response = requests.get(url.format(page), headers=self.auth)
             
-            issues.append(list(filter(
+            issues += list(filter(
                 lambda a: 
                 a is not None, 
                 map(
