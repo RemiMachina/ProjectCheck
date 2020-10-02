@@ -148,17 +148,36 @@ class Git:
         
     def remote_issues(self) -> List[GitIssue]:
         
-        response = requests.get(f"https://api.github.com/repos/{self.repo}/issues", headers=self.auth)
+        issues = []
         
-        return list(filter(
-            lambda a: 
-            a is not None, 
-            map(
-                lambda b: 
-                GitIssue.from_json(b), 
-                response.json()
-            )
-        ))
+        page = 1
+        max = 100
+        finished = False
+        
+        empty = "{}"
+        url = f"https://api.github.com/repos/{self.repo}/issues?per_page={max}&state=open&page={empty}"
+            
+        while not finished:
+        
+            response = requests.get(url.format(page), headers=self.auth)
+            
+            issues.append(list(filter(
+                lambda a: 
+                a is not None, 
+                map(
+                    lambda b: 
+                    GitIssue.from_json(b), 
+                    response.json()
+                )
+            )))
+            
+            if len(issues) / page < max:
+                finished = True
+        
+            page += 1
+        
+        return issues
+        
         
     def sync_issues(self, report: LintReport):
 
