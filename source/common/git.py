@@ -143,22 +143,10 @@ class Git:
         
         issues = []
         
-        # for path, file_report in report.reports.items():
-        #     print(path)
-        #     for hash, lints in file_report.lints.items():
-        #         print(hash)
-        #         print(len(lints))
-        
         for path, file_report in report.reports.items():
-            print(path)
             for hash, lints in file_report.lints.items():
-                print(hash)
-                print(len(lints))
-                issue = GitIssue.from_lint(lints = lints, repo = self.repo, after = self.after)
-                print(issue.body)
-                print("")
-                issues.append(issue)
-            print("")
+                issues.append(GitIssue.from_lint(lints = lints, repo = self.repo, after = self.after))
+                
         return issues
         
     def remote_issues(self) -> List[GitIssue]:
@@ -181,21 +169,41 @@ class Git:
         
         for local in self.local_issues(report = report):
             updates[local.title] = {"local": local, "remote": None}
-            
+        
+        print("BEFORE")
+        print(len(updates))
+        print(updates)
+        print("")
+        print("")
+        print("")
+        
         for remote in self.remote_issues():
             if remote.title in updates:
                 updates[remote.title]["remote"] = remote
             else:
                 updates[remote.title] = {"local": None, "remote": remote}
 
+        print("AFTER")
+        print(len(updates))
+        print(updates)
+        print("")
+        print("")
+        print("")
+
         for title, update in updates.items():
-            
+            print(title)
             if update["remote"] is None:
+                print("create")
                 self.create_issue(issue = update["local"])
             elif update["local"] is None:
+                print("close")
                 self.close_issue(issue = update["remote"])
             elif update["local"] is not None and update["remote"] is not None:
+                print("close")
                 self.update_issue(new = update["local"], old = update["remote"])
+            else:
+                print("none")
+            print("")
 
     def create_issue(self, issue: GitIssue): 
 
