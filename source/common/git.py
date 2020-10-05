@@ -50,10 +50,19 @@ class GitIssue:
         empty = "{}"
         base = f"{empty}\r\nhttps://github.com/{repo}/blob/{after}/{first.path}#L{empty}\r\n"
         
+        common_issues = {
+            "E0611": "This issue is often flagged by pylint when an imported pip package and a local python file share the same name. You can disable the check in this file by adding the line `# pylint: disable=E0611` above the import."
+        }
+            
+        try:
+            common_warning = ">**Note:**\r\n>" + common_issues[first.message_id] = "\r\n"
+        except KeyError:
+            common_warning = ""
+            
         return GitIssue(
             number = None,
             title = f"[{first.message_id}] " + first.symbol.replace("-", " ").capitalize() + " " + first.type + " in " + first.path,
-            body = "".join(list(map(lambda a: base.format(a.message, a.line), lints))),
+            body = common_warning + "".join(list(map(lambda a: base.format(a.message, a.line), lints))),
             labels = ["autolint", first.type],
             assignees = [],# list(set(list(map(lambda a: a.blame.author, lints)))),
             local = True
@@ -83,6 +92,7 @@ class GitIssue:
             "assignees": self.assignees,
             "state": "open"
         }
+    
             
 class GitBlame:
 
