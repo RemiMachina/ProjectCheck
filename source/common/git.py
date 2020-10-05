@@ -55,7 +55,7 @@ class GitIssue:
         }
             
         try:
-            common_warning = ">**Note:**\r\n>" + common_issues["E0611"] + "\r\n"
+            common_warning = ">**Note:**\r\n>" + common_issues["E0611"] + "\r\n\r\n"
         except KeyError:
             common_warning = ""
             
