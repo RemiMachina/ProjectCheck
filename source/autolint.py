@@ -25,15 +25,15 @@ report = linter.lint(git = git)
 
 git.sync_issues(report = report)
 
-if report.counts.total > 0:
-    print(f"Report: {report.counts.total}")
+if report.counts.errors.total > 0:
+    
     sender = slack.lookup_bot(oauth = os.environ.get("SLACK_OAUTH"))
     receiver = slack.lookup_channel(name = "github-actions")
 
-    if report.counts.total == 1:
+    if report.counts.errors.total == 1:
         pluralised = "is 1 unresolved issue"
     else:
-        pluralised = f"are {report.counts.total} unresolved issues"
+        pluralised = f"are {report.counts.errors.total} unresolved issues"
 
     blocks = [
         {
@@ -70,6 +70,3 @@ if report.counts.total > 0:
     slack.send_blocks(blocks = blocks, sender = sender, receiver = receiver)
     
     sys.exit(1)
-
-else:
-    print("Hi")
