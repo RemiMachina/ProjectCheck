@@ -51,8 +51,8 @@ class GitIssue:
         base = f"{empty}\r\nhttps://github.com/{repo}/blob/{after}/{first.path}#L{empty}\r\n"
         
         common_issues = {
-            "E0611": "This issue is often flagged by pylint when an imported pip package and a local python file share the same name. You can disable the check in this file by adding a pylint disable comment to the end of each offending line: `import blah # pylint: disable=E0611`.",
-            "E0402": "This issue is often flagged by pylint because it is unsure of the Python context that the script will be run in. If you are sure that this import is ok, you can disable the error by adding a pylint disable comment to the end of each offending line: `import .blah # pylint: disable=E0402`."
+            "E0611": "This issue is often flagged by pylint when an imported pip package and a local python file share the same name. You can disable the check in this file by adding a pylint disable comment to the end of each offending line:\r\n`import blah # pylint: disable=E0611`.",
+            "E0402": "This issue is often flagged by pylint because it is unsure of the Python context that the script will be run in. If you are sure that this import is ok, you can disable the error by adding a pylint disable comment to the end of each offending line:\r\n`import .blah # pylint: disable=E0402`."
         }
             
         try:
