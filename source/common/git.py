@@ -219,7 +219,7 @@ class Git:
         
         return set(users)
         
-    def sync_issues(self, report: LintReport):
+    def sync_issues(self, report: LintReport) -> int:
 
         updates = {}
         
@@ -232,14 +232,20 @@ class Git:
             else:
                 updates[remote.title] = {"local": None, "remote": remote}
 
+        count = 0
+
         for title, update in updates.items():
             print(title)
             if update["remote"] is None:
                 self.create_issue(issue = update["local"])
+                count += 1
             elif update["local"] is None:
                 self.close_issue(issue = update["remote"])
             elif update["local"] is not None and update["remote"] is not None:
                 self.update_issue(new = update["local"], old = update["remote"])
+                count += 1
+
+        return count
 
     def create_issue(self, issue: GitIssue): 
 
