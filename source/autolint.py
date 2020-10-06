@@ -27,6 +27,8 @@ git.sync_issues(report = report)
 
 if report.counts.errors.total > 0:
     
+    print(f"reports: {report.counts.errors.total}")
+    
     sender = slack.lookup_bot(oauth = os.environ.get("SLACK_OAUTH"))
     receiver = slack.lookup_channel(name = "github-actions")
 
@@ -70,3 +72,7 @@ if report.counts.errors.total > 0:
     slack.send_blocks(blocks = blocks, sender = sender, receiver = receiver)
     
     sys.exit(1)
+
+else:
+    
+    print(f"hello: {report.counts.errors.total}")
