@@ -2,7 +2,7 @@ name: "Project Check"
 description: ""
 
 inputs:
-    run:
+    exec:
         description: "The name of the action to execute"    
         required: true
     before:
@@ -28,7 +28,7 @@ runs:
     using: "docker"
     image: "Dockerfile"
     env:
-        RUN_SCRIPT: ${{ inputs.run }}
+        RUN_SCRIPT: ${{ inputs.exec }}
         SHA_BEFORE: ${{ inputs.before }}
         SHA_AFTER: ${{ inputs.after }}
         REPO_NAME: ${{ inputs.repository }}
