@@ -35,7 +35,7 @@ if count > 0:
     if report.counts.errors.total == 1:
         pluralised = "is 1 unresolved issue"
     else:
-        pluralised = f"are {count} unresolved issues"
+        pluralised = f"are {count} unresolved autolint issues"
 
     blocks = [
         {
