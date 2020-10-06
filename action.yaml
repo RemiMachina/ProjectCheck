@@ -17,16 +17,25 @@ inputs:
     token:
         description: "The token of the github action -> see: {{ secrets.GITHUB_TOKEN }}"
         required: true
+    slack:
+        description: "The oauth token of the bot to send the slack message from"
+        required: true
+    run:
+        description: "The run id of the github action -> see {{ github.run_id }}"
+        required: true
     
 runs:
-      using: "docker"
-      image: "Dockerfile"
-      env:
-          RUN_SCRIPT: ${{ inputs.run }}
-          SHA_BEFORE: ${{ inputs.before }}
-          SHA_AFTER: ${{ inputs.after }}
-          REPO_NAME: ${{ inputs.repository }}
-          REPO_TOKEN: ${{ inputs.token }}
+    using: "docker"
+    image: "Dockerfile"
+    env:
+        RUN_SCRIPT: ${{ inputs.run }}
+        SHA_BEFORE: ${{ inputs.before }}
+        SHA_AFTER: ${{ inputs.after }}
+        REPO_NAME: ${{ inputs.repository }}
+        REPO_TOKEN: ${{ inputs.token }}
+        SLACK_OAUTH: ${{ inputs.slack }}
+        GIT_RUN: ${{ inputs.run }}
+        
         
 branding:
     icon: "slack"  
