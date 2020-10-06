@@ -21,12 +21,12 @@ git = Git(
 
 report = linter.lint(git = git)
 
-linter.terminal(report = report)
+# linter.terminal(report = report)
 
 git.sync_issues(report = report)
 
 if report.counts.total > 0:
-
+    print(f"Report: {report.counts.total}")
     sender = slack.lookup_bot(oauth = os.environ.get("SLACK_OAUTH"))
     receiver = slack.lookup_channel(name = "github-actions")
 
@@ -70,3 +70,6 @@ if report.counts.total > 0:
     slack.send_blocks(blocks = blocks, sender = sender, receiver = receiver)
     
     sys.exit(1)
+
+else:
+    print("Hi")
