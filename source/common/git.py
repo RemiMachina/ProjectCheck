@@ -4,7 +4,7 @@
 import json
 import requests
 
-from typing import List, Dict
+from typing import List, Dict, Set
 from functools import reduce
 
 from .util import util
@@ -44,7 +44,7 @@ class GitIssue:
         )
 
     @staticmethod
-    def from_lint(lints: List[LintIssue], repo: str, after: str):
+    def from_lint(lints: List[LintIssue], users: Set[str], repo: str, after: str):
         
         first = lints[0]
         empty = "{}"
@@ -59,13 +59,13 @@ class GitIssue:
             common_warning = ">**Note:**\r\n>" + common_issues[first.message_id] + "\r\n\r\n"
         except KeyError:
             common_warning = ""
-            
+        
         return GitIssue(
             number = None,
             title = f"[{first.message_id}] " + first.symbol.replace("-", " ").capitalize() + " " + first.type + " in " + first.path,
             body = common_warning + "".join(list(map(lambda a: base.format(a.message, a.line), lints))),
             labels = ["autolint", first.type],
-            assignees = [],# list(set(list(map(lambda a: a.blame.author, lints)))),
+            assignees = list(set(list(map(lambda a: a.blame.author, lints))).intersection(users)),
             local = True
         )
         
@@ -150,10 +150,11 @@ class Git:
     def local_issues(self, report: LintReport) -> List[GitIssue]:
         
         issues = []
+        users = self.remote_users()
         
         for path, file_report in report.reports.items():
             for hash, lints in file_report.lints.items():
-                issues.append(GitIssue.from_lint(lints = lints, repo = self.repo, after = self.after))
+                issues.append(GitIssue.from_lint(lints = lints, users = users, repo = self.repo, after = self.after))
                 
         return issues
         
@@ -189,6 +190,34 @@ class Git:
         
         return issues
         
+    def remote_users(self) -> Set[str]:
+        
+        users = []
+        
+        page = 1
+        max = 100
+        finished = False
+        
+        empty = "{}"
+    
+        url = f"https://api.github.com/repos/{self.repo}/collaborators?per_page={max}&affiliation=all&page={empty}"
+            
+        while not finished:
+        
+            response = requests.get(url.format(page), headers=self.auth)
+            
+            users += list(map(
+                lambda a:
+                a["login"],
+                response.json()
+            ))
+            
+            if len(users) / page < max:
+                finished = True
+        
+            page += 1
+        
+        return set(users)
         
     def sync_issues(self, report: LintReport):
 
