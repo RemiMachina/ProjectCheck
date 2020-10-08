@@ -17,5 +17,23 @@ jobs:
             
           - name: Second Step
             id: second_step
-            run: echo ${{ steps.first_step.outputs.fruit }}
+            run: echo test
+            
+          - name: Sleep for 15 seconds
+            uses: jakejarvis/wait-action@master
+            with:
+                time: '15s'
+                
+    second_job: 
+        
+        name: Second Job
+        needs: first_job
+        runs-on: ubuntu-latest
+        
+        steps:
+    
+          - name: First Step
+            id: first_step
+            run: echo "Hello"
+        
             
