@@ -13,5 +13,9 @@ jobs:
             
           - name: First Step
             id: first_step
-            run: echo "Hello world"
+            run: echo "::set-output name=fruit::strawberry"
+            
+          - name: Second Step
+            id: second_step
+            run: echo ${{ steps.first_step.outputs.fruit }}
             
