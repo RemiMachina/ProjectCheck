@@ -16,7 +16,7 @@ jobs:
             uses: docker://docker/whalesay:latest
             with:
               entrypoint: cowsay
-              message: its spooky season 
+              args: its spooky season 
 
 
           - name: Surbhi Says Fuck Yah
