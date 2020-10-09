@@ -15,7 +15,9 @@ jobs:
             id: what_does_the_whale_say
             uses: docker://docker/whalesay:latest
             with:
-              cowsay: "It's spooky season!"
+              entrypoint: cowsay
+              message: its spooky season 
+
 
           - name: Surbhi Says Fuck Yah
             id: surbhi_says_fuck_yah
