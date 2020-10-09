@@ -3,17 +3,15 @@ name: Irina
 on: push
     
 jobs:
-    
     first_job:
-        
         name: First Job
         runs-on: ubuntu-latest
-        steps:
-            
+
+        steps:  
           - name: First Step
             id: first_step
             uses: docker://whalesay:latest 
-	          with: 
+            with: 
                 args: cowsay boo	 
 
           - name: Second Step
