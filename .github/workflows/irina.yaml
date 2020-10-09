@@ -13,9 +13,8 @@ jobs:
           - name: First Step
             id: first_step
             uses: docker://whalesay:latest 
-	    with: 
-                args: cowsay boo
-		 
+	          with: 
+                args: cowsay boo	 
 
           - name: Second Step
             id: second_step
