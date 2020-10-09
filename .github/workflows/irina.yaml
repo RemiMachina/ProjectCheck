@@ -10,7 +10,7 @@ jobs:
         steps:  
           - name: First Step
             id: first_step
-            uses: docker://whalesay:latest 
+            uses: docker://docker/whalesay 
             with: 
                 args: cowsay boo	 
 
