@@ -13,7 +13,9 @@ jobs:
 
           - name: Whale talks
             id: what_does_the_whale_say
-            run: docker run docker/whalesay hello
+            uses: docker://docker/whalesay:latest
+            with:
+              cowsay: "It's spooky season!"
 
           - name: Surbhi Says Fuck Yah
             id: surbhi_says_fuck_yah
