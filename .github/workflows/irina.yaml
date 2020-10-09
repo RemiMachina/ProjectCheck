@@ -1,0 +1,25 @@
+name: Irina
+
+on: push
+    
+jobs:
+    
+    first_job:
+        
+        name: First Job
+        runs-on: ubuntu-latest
+        steps:
+            
+          - name: First Step
+            id: first_step
+            uses: docker://docker/whalesay:latest 
+	    with: 
+		entrypoint: cowsay 
+		args: boo
+		 
+
+          - name: Second Step
+            id: second_step
+            run: echo "Fuck Yeah!"
+        
+            
