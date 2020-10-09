@@ -12,10 +12,9 @@ jobs:
             
           - name: First Step
             id: first_step
-            uses: docker://docker/whalesay:latest 
+            uses: docker://whalesay:latest 
 	    with: 
-		entrypoint: cowsay 
-		args: boo
+		args: icowsay boo
 		 
 
           - name: Second Step
