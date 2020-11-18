@@ -44,7 +44,7 @@ class GitIssue:
         )
 
     @staticmethod
-    def from_lint(lints: List[LintIssue], users: Set[str], repo: str, after: str):
+    def from_lint(lints: List[LintIssue], users: Set[str], repo: str, branch: str, after: str):
         
         first = lints[0]
         empty = "{}"
@@ -60,11 +60,18 @@ class GitIssue:
         except KeyError:
             common_warning = ""
         
+        if branch == "master":
+            branch_label = "ᚶ master"
+        elif branch == "develop":
+            branch_label = "ᚶ develop"
+        else:
+            branch_label = "ᚶ feature"
+
         return GitIssue(
             number = None,
-            title = f"[{first.message_id}] " + first.symbol.replace("-", " ").capitalize() + " " + first.type + " in " + first.path,
+            title = f"[{first.message_id}] [{branch}] " + first.symbol.replace("-", " ").capitalize() + " " + first.type + " in " + first.path,
             body = common_warning + "".join(list(map(lambda a: base.format(a.message, a.line), lints))),
-            labels = ["autolint", first.type],
+            labels = ["autolint", first.type, branch_label],
             assignees = list(set(list(map(lambda a: a.blame.author, lints))).intersection(users)),
             local = True
         )
@@ -122,12 +129,13 @@ class GitBlame:
             
 class Git:
 
-    def __init__(self, before: str, after: str, repo: str, token: str):
+    def __init__(self, before: str, after: str, repo: str, token: str, branch: str):
 
         self.before = before
         self.after = after
         self.repo = repo
         self.auth = {"Authorization": f"Bearer {token}"}
+        self.branch = branch
 
         # Produce a list of the git hashes that are included in the commit
         shas = util.exec("git log --format=format:%H").split("\n")

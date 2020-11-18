@@ -16,7 +16,8 @@ git = Git(
     before = os.environ.get("SHA_BEFORE"), 
     after = os.environ.get("SHA_AFTER"), 
     repo = os.environ.get("REPO_NAME"),
-    token = os.environ.get("REPO_TOKEN")
+    token = os.environ.get("REPO_TOKEN"),
+    branch = os.environ.get("REPO_BRANCH")
 )
 
 report = linter.lint(git = git)

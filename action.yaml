@@ -23,6 +23,9 @@ inputs:
     run:
         description: "The run id of the github action -> see {{ github.run_id }}"
         required: true
+    branch:
+        description: "The branch that that was committed to -> see {{ github.event.inputs.branch }}"
+        default: "unknown"
     
 runs:
     using: "docker"
@@ -35,6 +38,7 @@ runs:
         REPO_TOKEN: ${{ inputs.token }}
         SLACK_OAUTH: ${{ inputs.slack }}
         GIT_RUN: ${{ inputs.run }}
+        REPO_BRANCH: ${{ inputs.branch }}
         
         
 branding:
