@@ -162,7 +162,7 @@ class Git:
         
         for path, file_report in report.reports.items():
             for hash, lints in file_report.lints.items():
-                issues.append(GitIssue.from_lint(lints = lints, users = users, repo = self.repo, after = self.after))
+                issues.append(GitIssue.from_lint(lints = lints, users = users, repo = self.repo, branch = self.branch, after = self.after))
                 
         return issues
         
