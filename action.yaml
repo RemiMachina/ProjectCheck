@@ -25,7 +25,7 @@ inputs:
         required: true
     branch:
         description: "The branch that that was committed to -> see {{ github.event.inputs.branch }}"
-        default: "unknown"
+        required: true
     
 runs:
     using: "docker"
