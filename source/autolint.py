@@ -12,6 +12,8 @@ from slack import slack
 # Executors
 linter = Linter()
 
+print(f"Branch: {os.environ.get('REPO_BRANCH')}")
+
 git = Git(
     before = os.environ.get("SHA_BEFORE"), 
     after = os.environ.get("SHA_AFTER"), 
