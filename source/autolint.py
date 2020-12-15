@@ -12,7 +12,7 @@ from slack import slack
 # Executors
 linter = Linter()
 
-print(f"Branch: {os.environ.get('REPO_BRANCH')}")
+print(f"Branch: {os.environ['REPO_BRANCH']}")
 
 git = Git(
     before = os.environ.get("SHA_BEFORE"), 
