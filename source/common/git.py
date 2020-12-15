@@ -14,7 +14,7 @@ from .pylint import LintReport, LintIssue
 
 class GitIssue:
 
-    def __init__(self, number: int, title: str, body: str, labels: List[str], assignees: List[str], local: bool):
+    def __init__(self, number: int, title: str, body: str, labels: List[str], assignees: List[str], local: bool, branch: str):
 
         self.number = number
         self.title = title
@@ -22,6 +22,7 @@ class GitIssue:
         self.labels = labels
         self.assignees = assignees
         self.local = local
+        self.branch = branch
         
     @staticmethod
     def from_json(data: Dict[str, any]):
@@ -34,13 +35,16 @@ class GitIssue:
         
         if "autolint" not in labels: return None
 
+        branch = data["title"].split(" ")[1][1:-1]
+
         return GitIssue(
             number = data["number"],
             title = data["title"],
             body = data["body"],
             labels = labels,
             assignees = assignees,
-            local = False
+            local = False,
+            branch = branch
         )
 
     @staticmethod
@@ -73,7 +77,8 @@ class GitIssue:
             body = common_warning + "".join(list(map(lambda a: base.format(a.message, a.line), lints))),
             labels = ["autolint", first.type, branch_label],
             assignees = list(set(list(map(lambda a: a.blame.author, lints))).intersection(users)),
-            local = True
+            local = True,
+            branch = branch
         )
         
     def prepare_create(self) -> Dict[str, any]:
@@ -247,7 +252,7 @@ class Git:
             if update["remote"] is None:
                 self.create_issue(issue = update["local"])
                 count += 1
-            elif update["local"] is None:
+            elif update["local"] is None and self.branch == update["remote"].branch:
                 self.close_issue(issue = update["remote"])
             elif update["local"] is not None and update["remote"] is not None:
                 self.update_issue(new = update["local"], old = update["remote"])
