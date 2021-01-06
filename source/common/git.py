@@ -25,7 +25,7 @@ class GitIssue:
         self.branch = branch
         
     @staticmethod
-    def from_json(data: Dict[str, any]):
+    def from_json(data: Dict[str, any], branch: str):
         
         if "pull_request" in data: return None
         if data["state"] == "closed": return None
@@ -35,7 +35,7 @@ class GitIssue:
         
         if "autolint" not in labels: return None
 
-        branch = data["title"].split(" ")[1][1:-1]
+        if branch != data["title"].split(" ")[1][1:-1]: return None
 
         return GitIssue(
             number = data["number"],
@@ -191,7 +191,7 @@ class Git:
                 a is not None, 
                 map(
                     lambda b: 
-                    GitIssue.from_json(b), 
+                    GitIssue.from_json(data=b, branch=self.branch), 
                     response.json()
                 )
             ))
