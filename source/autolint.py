@@ -72,7 +72,7 @@ if count > 0:
         }
     ]
 
-    slack.send_blocks(blocks = blocks, sender = sender, receiver = receiver)
+    # slack.send_blocks(blocks = blocks, sender = sender, receiver = receiver)
     
     sys.exit(1)
 
