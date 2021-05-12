@@ -10,7 +10,7 @@ unsafe-load-any-extension=no
 disable=R,
         C,
         W,
-        import-error
+        import-error,
         assigning-non-slot
 
 
