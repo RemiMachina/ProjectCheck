@@ -11,6 +11,7 @@ disable=R,
         C,
         W,
         import-error
+        assigning-non-slot
 
 
 [REPORTS]
