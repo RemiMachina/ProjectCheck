@@ -3,7 +3,8 @@
 
 import subprocess
 
-from typing import List
+from typing import List, Union
+
 
 class util:
     
@@ -24,3 +25,11 @@ class util:
     def files() -> List[str]:
         
         return list(map(lambda b: b[2:], filter(lambda a: a != "", util.exec("find . -type f -name '*.py'").split("\n"))))
+
+    @staticmethod
+    def safe_index(array: List[any], value: any, default: Union[int, None] = None) -> Union[int, None]:
+
+        try:
+            return array.index(value)
+        except ValueError:
+            return default

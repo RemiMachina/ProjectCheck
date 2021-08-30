@@ -23,7 +23,7 @@ jobs:
             run: git config --global user.name "Github Automator"
 
           - name: Overwrite Tag
-            run: git tag -m "Initial release" -f -a v1
+            run: git tag -m "Second release" -f -a v2
             
           - name: Push Tag
             run: git push -f --tags
