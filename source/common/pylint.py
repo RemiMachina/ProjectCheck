@@ -211,6 +211,11 @@ class Linter:
     
         for path, issues in itertools.groupby(json.loads(util.exec(f"pylint {self.arguments} {files}")), key = lambda a: a["path"]):
             
+            if len(issues) == 0:
+                print(f"✓ - {path}")
+            else:
+                print(f"× - {path} ({len(issues)} issue(s) found)")
+
             blame = git.blame(path = path)
             file = LintFile(path = path, blame = blame)
         
