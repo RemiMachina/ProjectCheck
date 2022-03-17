@@ -1,3 +1,3 @@
 #!/bin/sh -l
 
-python /source/"$RUN_SCRIPT".py
+python /source/test.py

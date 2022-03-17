@@ -1,4 +1,0 @@
-pylint
-pydocstyle
-requests
-flask

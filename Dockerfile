@@ -1,10 +1,6 @@
-FROM python:3.7
-
-ADD source/requirements.txt /source/requirements.txt
-RUN pip install --no-cache-dir -r /source/requirements.txt
+FROM remimachina/client-base:test AS base
 
 COPY source /source
-
 
 RUN chmod -R 755 /source
 
