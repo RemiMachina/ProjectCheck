@@ -1,0 +1,4 @@
+pylint
+pydocstyle
+requests
+flask
